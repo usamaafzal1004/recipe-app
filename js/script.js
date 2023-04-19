@@ -20,7 +20,7 @@ searchForm.addEventListener('submit', (e) => {
 });
 
 async function fetchAPI() {
-  const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${APP_key}&query=${searchQuery}&addRecipeInformation=true`;
+  const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${APP_key}&query=${searchQuery}&addRecipeInformation=true&number=9`;
   const response = await fetch(baseURL);
   const data = await response.json();
   generateHTML(data.results);
