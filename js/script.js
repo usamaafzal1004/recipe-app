@@ -2,7 +2,7 @@ const searchForm = document.querySelector('form');
 const searchResultDiv = document.querySelector('.search-result');
 const container = document.querySelector('.container');
 let searchQuery = '';
-const APP_key = 'b41d9066487f414bb7a5a6bd1ba251b2';
+const APP_key = '5fea68764b4d42f0932cb37e54ec4794';
 
 // Load the last search query from local storage, if available
 const lastSearchQuery = localStorage.getItem('lastSearchQuery');
