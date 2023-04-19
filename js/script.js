@@ -1,0 +1,59 @@
+const searchForm = document.querySelector('form');
+const searchResultDiv = document.querySelector('.search-result');
+const container = document.querySelector('.container');
+let searchQuery = '';
+const APP_key = 'b41d9066487f414bb7a5a6bd1ba251b2';
+
+// Load the last search query from local storage, if available
+const lastSearchQuery = localStorage.getItem('lastSearchQuery');
+if (lastSearchQuery) {
+  searchQuery = lastSearchQuery;
+  searchForm.querySelector('input').value = lastSearchQuery;
+  fetchAPI();
+}
+
+searchForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  searchQuery = e.target.querySelector('input').value;
+  localStorage.setItem('lastSearchQuery', searchQuery);
+  fetchAPI();
+});
+
+async function fetchAPI() {
+  const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${APP_key}&query=${searchQuery}&addRecipeInformation=true`;
+  const response = await fetch(baseURL);
+  const data = await response.json();
+  generateHTML(data.results);
+  console.log(data);
+}
+
+function generateHTML(results) {
+  container.classList.remove('initial');
+  let generatedHTML = '';
+  results.map((result) => {
+    generatedHTML += `
+      <div class="item">
+        <img src="${result.image}" alt="img">
+        <div class="flex-container">
+          <h1 class="title">${result.title}</h1>
+          <a class="view-btn" target="_blank" href="${result.sourceUrl}">View Recipe</a>
+        </div>
+      </div>
+    `;
+  });
+  searchResultDiv.innerHTML = generatedHTML;
+}
+
+// const baseURL = `https://api.spoonacular.com/recipes/complexSearch?query=pasta&app_key=${APP_key}`;
+
+// async function fetchAPI (){
+//     const baseURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${APP_key}&query=pasta`;  
+//     const response = await fetch(baseURL).then(data=> data.json()).then(res=>{
+//       console.log(res)
+//     }).catch((error)=>{
+//       console.log(error);
+//     })
+//     const data = await response.json();
+//     // generateHTML(data.hits);
+//     console.log(data);
+// }
